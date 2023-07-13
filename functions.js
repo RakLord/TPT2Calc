@@ -121,9 +121,11 @@ export function getDifficultyValue(difficulty, waveCompression) {
 					case 2:
 						return 4;
 					case 3:
-						return 5;
+						return 4;
 					case 4:
 						return 5;
+                    case 5:
+                        return 5;
 					default:
 						return 2;
 				}
@@ -136,9 +138,11 @@ export function getDifficultyValue(difficulty, waveCompression) {
 					case 2:
 						return 8;
 					case 3:
-						return 9;
+						return 8;
 					case 4:
-						return 10;
+						return 9;
+                    case 5: 
+                        return 10;
 					default:
 						return 4;
 				}
