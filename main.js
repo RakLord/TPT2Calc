@@ -1,5 +1,5 @@
-import { Calculator } from "./calculators/sampleCalc.js";
-import { CratoCalculator } from "./calculators/CratoCalc.js";
+import { Calculator } from "calculators/sampleCalc.js";
+import { CratoCalculator } from "calculators/CratoCalc.js";
 
 
 $(document).ready(function() {
