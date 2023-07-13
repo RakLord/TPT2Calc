@@ -1,7 +1,7 @@
 
 function createDropdown(data) {
     let div = $("<div>").addClass("select-container");
-    let select = $("<select>").addClass("select-box");
+    let select = $("<select>").addClass("select-box input-box");
 
     data.forEach((name, index)=> {
         select.append($("<option>").attr("value", index).text(name));
@@ -16,7 +16,7 @@ function newInput(title, dropdown=false) {
     let div = $("<div>").addClass("flow");
     let titleTag = $("<h3>").text(title);
     if (!dropdown) {
-      let inputTag = $("<input>").attr("placeholder", "0");
+      let inputTag = $("<input>").attr("placeholder", "0").addClass("input-box");
       div.append(titleTag, inputTag);
     }
     else {
