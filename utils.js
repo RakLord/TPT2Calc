@@ -18,11 +18,10 @@ function newInput(title, dropdown=false) {
     if (!dropdown) {
       let inputTag = $("<input>").attr("placeholder", "0");
       div.append(titleTag, inputTag);
-      return div;
     }
     else {
       let dropdownInput = createDropdown(dropdown);
       div.append(titleTag, dropdownInput);
-      return div;
     }
+    return div;
   }
