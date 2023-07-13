@@ -184,7 +184,10 @@ main {
 }
 
 .input-box {
-    border: 1px solid hotpink;
+    padding: 0.25rem;
+    width: 100%;
+    max-width: 20rem;
+    
 }
 
 /* Dropdowns */
@@ -192,8 +195,5 @@ main {
     display: flex;
 }
 
-.select-box{
-    width: 100%;
-    max-width: 15rem;
-}
+
 

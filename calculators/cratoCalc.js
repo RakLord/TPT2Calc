@@ -1,17 +1,6 @@
 
 export class CratoCalculator {
     constructor() {
-  
-      function newInput(title) {
-        let div = $("<div>").addClass("flow");
-        let titleTag = $("<h3>").text(title);
-        let inputTag = $("<input>").attr("placeholder", "0");
-      
-        div.append(titleTag, inputTag);
-        return div;
-      }
-  
-      
       function checkValid(input) {
         let val = input.val().trim();
         let isValid = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/.test(val);
