@@ -1,6 +1,8 @@
 
 export class CratoCalculator {
     constructor() {
+
+      
       function checkValid(input) {
         let val = input.val().trim();
         let isValid = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/.test(val);
@@ -17,7 +19,7 @@ export class CratoCalculator {
   
   
       this.section = $("<section>").addClass("calc");
-      this.title = $("<h2>").text("Cratos Calculator");
+      this.title = $("<h2>").text("Clear Speed Calculator (CSP)");
   
   
       // Inputs Stuff
@@ -25,11 +27,42 @@ export class CratoCalculator {
   
       this.inputs = {};
       
-      this.inputs.townLevel = newInput("Town Level");
-      this.inputsGrid.append(this.inputs.townLevel);  
 
-      this.inputs.currentExperience = newInput("Current Experience");
-      this.inputsGrid.append(this.inputs.currentExperience);
+      //Time
+      this.inputs.gameTimeH = newInput("Time spent in Round (H)");
+      this.inputsGrid.append(this.inputs.gameTimeH);
+
+      this.inputs.gameTimeM = newInput("Time spent in Round (M)");
+      this.inputsGrid.append(this.inputs.gameTimeM);
+
+      this.inputs.gameTimeS = newInput("Time spent in Round (S)");
+      this.inputsGrid.append(this.inputs.gameTimeS);
+
+      this.inputs.gameSpeed = newInput("Game Speed", 
+      ["1X","2X","3X (POWERPLANT FLOOR 2)","0.5X (ABSOLUTE ZERO)","1.5X (AZ + PPF2)"]);
+      this.inputsGrid.append(this.inputs.gameSpeed);
+
+
+      //Round Kills
+      this.inputs.kills = newInput("Total Kills");
+      this.inputsGrid.append(this.inputs.kills);  
+
+
+      this.inputs.CSPRegion = newInput("Current Region", ["FOREST","DESERT","WINTER","UNDERGROUND",
+      "VOLCANO","HIGH MOUNTAIN","JUNGLE","METALLIC RUINS","BEACH","OCEAN","NEUTRAL",
+      "DARK REALM","HEAVEN","UNIVERSE","CHAOS"]);
+      this.inputsGrid.append(this.inputs.CSPRegion);
+
+      this.inputs.CSPDifficulty = newInput("Current Difficulty", 
+      ["EASY","MEDIUM","HARD","INSANE","NIGHTMARE","IMPOSSIBLE"]);
+      this.inputsGrid.append(this.inputs.CSPDifficulty);
+
+      this.inputs.waveCompression = newInput("Using Wave Compression?", ["No", "Yes"])
+      this.inputsGrid.append(this.inputs.waveCompression)
+
+
+
+
 
 
       // Output Stuff
@@ -61,20 +94,40 @@ export class CratoCalculator {
         });
       }
       
-      setupInputs(this.inputs.townLevel);
-      setupInputs(this.inputs.currentExperience);
+      setupInputs(this.inputs.gameTimeH);
+      setupInputs(this.inputs.gameTimeM);
+      setupInputs(this.inputs.gameTimeS);
+      //setupInputs(this.inputs.gameSpeed);
+
+      setupInputs(this.inputs.kills);
+      setupInputs(this.inputs.CSPRegion);
+      //setupInputs(this.inputs.difficulty);
+
     }
     
     calculate() {
 
-      let v1 = parseFloat(this.inputs.townLevel.children().last().val());
-      let v2 = parseFloat(this.inputs.currentExperience.children().last().val());
+      let kills = parseFloat(this.inputs.kills.children().last().val());
 
-      let outputValue = v1 + v2;
+      let hour = parseFloat(this.inputs.gameTimeH.children().last().val());
+      let mins = parseFloat(this.inputs.gameTimeM.children().last().val());
+      let secs = parseFloat(this.inputs.gameTimeS.children().last().val());
+      let time = hour*3600 + mins*60 + secs;
+
+      let indexRegion = this.inputs.CSPRegion.find("option:selected").val();
+      let indexDifficulty = this.inputs.CSPDifficulty.find("option:selected").val();
+      let indexSpeed = this.inputs.gameSpeed.find("option:selected").val();
+      let indexWaveCompression = this.inputs.waveCompression.find("option:selected").val();
+
+
+
+
+      let outputValue = clearSpeedCalculator(kills, time, indexRegion,
+        indexDifficulty, indexSpeed, indexWaveCompression);
       
       console.log(outputValue);
       if (outputValue) {
-          this.outputInput.val(outputValue);
+          this.outputInput.val("Clear Speed: " + outputValue[0] + "\nKill Speed: " + outputValue[1]);
       }
       else {
           this.outputInput.val("Output");

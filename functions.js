@@ -18,6 +18,21 @@ function regionToPath(regionNumber) {
     }
 }
 
+function gameSpeedToValue(gameSpeed){
+    switch(gameSpeed) {
+        case 0: //1x
+            return 1;
+        case 1: //2x
+            return 2;
+        case 2: //3x PPF2
+            return 3;
+        case 3: //0.5x AZ
+            return 0.5;
+        case 4: //1.5x AZ + PPF2
+            return 1.5;
+    }
+}
+
 function regionToElements(regionNumber) {
     switch (regNo) {
         case 11:
@@ -38,12 +53,7 @@ function regionToElements(regionNumber) {
 }
 
 function enemiesPerWave(difficulty, paths, moreAccuracy) {
-    let enemies;
-    if (moreAccuracy) {
-        enemies = (difficulty * paths * 0.9) + (((difficulty - 1) * paths + 1) * 0.1);
-    } else {
-        enemies = difficulty * paths;
-    }
+    let enemies = (difficulty * paths * 0.9) + (((difficulty - 1) * paths + 1) * 0.1);
 
     return enemies;
 }
@@ -87,32 +97,51 @@ function difficultyToDropchance(diff) {
     }
 }
 
-function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed, moreAccuracy) {
+function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed, waveCompression) {
     // can accept 0-5 or "EASY" for difficulty (str name)
 
-    let difficulty = getDifficultyValue(difficulty); // Do this wherever we take a difficulty, allows to convert from a dropdown menu later to raw value
+    let enemiesPath = getDifficultyValue(difficulty, waveCompression); // Do this wherever we take a difficulty, allows to convert from a dropdown menu later to raw value
+    let paths = regionToPath((region+1));
+    let gameSpeed = gameSpeedToValue(gameSpeed);
+    let enemiesWave = enemiesPerWave(enemiesPath, paths, true); //treat More Accuracy as true
 
-    let paths = regionToPath(region);
-    let elements = 1;
-    let enemiesWave = enemiesPerWave(difficulty, paths, moreAccuracy);
 
-
-    if (difficulty = 5) {
-        elements = 10;
-    } else {
-        elements = regionToElements(region);
-    }
-
-    let clearSpeed = (kills * elements * gameSpeed) / (time / enemiesWave);
-    let killsPerSec = (kills * elements * gameSpeed) / time;
+    let clearSpeed = (kills * gameSpeed) / (time / enemiesWave);
+    let killsPerSec = (kills * gameSpeed) / time;
     
-    return (clearSpeed, killsPerSec);
+    return ([clearSpeed, killsPerSec]);
 }
 
-function getDifficultyValue(difficulty) {
-    if (difficulties.hasOwnProperty(difficulty)) {
-        return difficulties[difficulty];
-    } else {
-        return difficulty;
+function getDifficultyValue(difficulty, waveCompression) {
+    if(waveCompression == 1){
+        switch (difficulty)
+				{
+					case 1:
+						return 3;
+					case 2:
+						return 4;
+					case 3:
+						return 5;
+					case 4:
+						return 5;
+					default:
+						return 2;
+				}
+            }
+    else{
+        switch (difficulty)
+				{
+					case 1:
+						return 6;
+					case 2:
+						return 8;
+					case 3:
+						return 9;
+					case 4:
+						return 10;
+					default:
+						return 4;
+				}
     }
+        
 }
