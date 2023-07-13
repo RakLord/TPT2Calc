@@ -139,7 +139,9 @@ body {
     font-family: var(--ff-main);
     font-weight: 700;
 }
-
+main {
+    gap: 2rem;
+}
 
 .calc {
     background-color: rgba(255, 255, 255, 0.15);
