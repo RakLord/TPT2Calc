@@ -1,16 +1,6 @@
 
 export class Calculator {
-    constructor() {
-  
-      function newInput(title) {
-        let div = $("<div>").addClass("flow");
-        let titleTag = $("<h3>").text(title);
-        let inputTag = $("<input>").attr("placeholder", "0");
-      
-        div.append(titleTag, inputTag);
-        return div;
-      }
-  
+    constructor() { 
       
       function checkValid(input) {
         let val = input.val().trim();
@@ -39,10 +29,12 @@ export class Calculator {
       this.inputs.value1 = newInput("Input 1");
       this.inputs.value2 = newInput("Input 2");
       this.inputs.value3 = newInput("Input 3");
+      this.inputs.dropdown1 = newInput("Dropdown Test", ["Test1", ["Test 2"]])
   
       this.inputsGrid.append(this.inputs.value1);      
       this.inputsGrid.append(this.inputs.value2);      
       this.inputsGrid.append(this.inputs.value3);      
+      this.inputsGrid.append(this.inputs.dropdown1);      
   
       // Output Stuff
       this.output = $("<div>").addClass("flex-container flex-col flex-center");
@@ -81,12 +73,14 @@ export class Calculator {
     }
     
     calculate() {
+      let dropdownValue = this.inputs.dropdown1.find("option:selected").val();
+      
       let outputValue =
       parseFloat(this.inputs.value1.children().last().val()) +
       parseFloat(this.inputs.value2.children().last().val()) +
       parseFloat(this.inputs.value3.children().last().val());
       
-      console.log(outputValue);
+      console.log("OUTPUT:" + outputValue.toString());
       if (outputValue) {
           this.outputInput.val(outputValue);
       }
