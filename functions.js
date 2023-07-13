@@ -1,5 +1,5 @@
 
-function regionToPath(regionNumber) {
+export function regionToPath(regionNumber) {
     switch(regionNumber) {
         case 5:
             return 3;
@@ -18,7 +18,7 @@ function regionToPath(regionNumber) {
     }
 }
 
-function gameSpeedToValue(gameSpeed){
+export function gameSpeedToValue(gameSpeed){
     switch(gameSpeed) {
         case 0: //1x
             return 1;
@@ -33,7 +33,7 @@ function gameSpeedToValue(gameSpeed){
     }
 }
 
-function regionToElements(regionNumber) {
+export function regionToElements(regionNumber) {
     switch (regNo) {
         case 11:
             return 2;
@@ -52,7 +52,7 @@ function regionToElements(regionNumber) {
     }
 }
 
-function enemiesPerWave(difficulty, paths, moreAccuracy) {
+export function enemiesPerWave(difficulty, paths, moreAccuracy) {
     let enemies = (difficulty * paths * 0.9) + (((difficulty - 1) * paths + 1) * 0.1);
 
     return enemies;
@@ -71,7 +71,7 @@ function calculateModuleDropChance(wave, countMode, playerDropChance, moduleDrop
     return (dropChance, estimate);
 }
 
-function waveAddLog(stage) {
+export function waveAddLog(stage) {
     switch(stage) {
         case "era":
             return 11;
@@ -82,7 +82,7 @@ function waveAddLog(stage) {
     }
 }
 
-function difficultyToDropchance(diff) {
+export function difficultyToDropchance(diff) {
     switch (diff) {
         case 1:
             return 1.5;
@@ -97,12 +97,12 @@ function difficultyToDropchance(diff) {
     }
 }
 
-function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed, waveCompression) {
+export function clearSpeedCalculator(kills, time, region, difficulty, gameSpeedInput, waveCompression) {
     // can accept 0-5 or "EASY" for difficulty (str name)
 
     let enemiesPath = getDifficultyValue(difficulty, waveCompression); // Do this wherever we take a difficulty, allows to convert from a dropdown menu later to raw value
     let paths = regionToPath((region+1));
-    let gameSpeed = gameSpeedToValue(gameSpeed);
+    let gameSpeed = gameSpeedToValue(gameSpeedInput);
     let enemiesWave = enemiesPerWave(enemiesPath, paths, true); //treat More Accuracy as true
 
 
@@ -112,7 +112,7 @@ function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed, waveCo
     return ([clearSpeed, killsPerSec]);
 }
 
-function getDifficultyValue(difficulty, waveCompression) {
+export function getDifficultyValue(difficulty, waveCompression) {
     if(waveCompression == 1){
         switch (difficulty)
 				{

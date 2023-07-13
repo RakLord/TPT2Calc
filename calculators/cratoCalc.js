@@ -1,8 +1,7 @@
 
 export class CratoCalculator {
-    constructor() {
-
-      
+    constructor(func) {
+      this.clearSpeedCalculator = func;
       function checkValid(input) {
         let val = input.val().trim();
         let isValid = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/.test(val);
@@ -122,7 +121,7 @@ export class CratoCalculator {
 
 
 
-      let outputValue = clearSpeedCalculator(kills, time, indexRegion,
+      let outputValue = this.clearSpeedCalculator(kills, time, indexRegion,
         indexDifficulty, indexSpeed, indexWaveCompression);
       
       console.log(outputValue);
