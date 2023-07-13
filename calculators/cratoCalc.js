@@ -52,16 +52,12 @@ export class CratoCalculator {
       "DARK REALM","HEAVEN","UNIVERSE","CHAOS"]);
       this.inputsGrid.append(this.inputs.CSPRegion);
 
-      this.inputs.CSPDifficulty = newInput("Current Difficulty", 
+      this.inputs.difficulty = newInput("Current Difficulty", 
       ["EASY","MEDIUM","HARD","INSANE","NIGHTMARE","IMPOSSIBLE"]);
-      this.inputsGrid.append(this.inputs.CSPDifficulty);
+      this.inputsGrid.append(this.inputs.difficulty);
 
       this.inputs.waveCompression = newInput("Using Wave Compression?", ["No", "Yes"])
       this.inputsGrid.append(this.inputs.waveCompression)
-
-
-
-
 
 
       // Output Stuff
@@ -84,23 +80,34 @@ export class CratoCalculator {
       const self = this;
   
       function setupInputs(value) {
-        value.on("input", function() {
-          // This needs to reference the last child o fthe value1 selector as that is the input field
-          let valid = checkValid(value.children().last());  
-          if (valid) {
+        console.log(value.children().last());
+        let inputBox = value.children().last().hasClass("input-box")
+
+        if (inputBox) {
+          value.on("input", function() {
+            // This needs to reference the last child o fthe value1 selector as that is the input field
+            let valid = checkValid(value.children().last());  
+            if (valid) {
+              self.calculate();
+            }
+          });
+        }
+        else {
+          value.on("change", function() {
             self.calculate();
-          }
         });
+        }
+
       }
       
       setupInputs(this.inputs.gameTimeH);
       setupInputs(this.inputs.gameTimeM);
       setupInputs(this.inputs.gameTimeS);
-      //setupInputs(this.inputs.gameSpeed);
-
+      setupInputs(this.inputs.gameSpeed);
       setupInputs(this.inputs.kills);
       setupInputs(this.inputs.CSPRegion);
-      //setupInputs(this.inputs.difficulty);
+      setupInputs(this.inputs.difficulty);
+      setupInputs(this.inputs.waveCompression);
 
     }
     
@@ -114,8 +121,8 @@ export class CratoCalculator {
       let time = hour*3600 + mins*60 + secs;
 
       let indexRegion = this.inputs.CSPRegion.find("option:selected").val();
-      let indexDifficulty = this.inputs.CSPDifficulty.find("option:selected").val();
-      let indexSpeed = this.inputs.gameSpeed.find("option:selected").val();
+      let indexDifficulty = this.inputs.difficulty.find("option:selected").val();
+      let indexSpeed = parseFloat(this.inputs.gameSpeed.find("option:selected").val());
       let indexWaveCompression = this.inputs.waveCompression.find("option:selected").val();
 
 
@@ -126,7 +133,7 @@ export class CratoCalculator {
       
       console.log(outputValue);
       if (outputValue) {
-          this.outputInput.val("Clear Speed: " + outputValue[0] + "\nKill Speed: " + outputValue[1]);
+          this.outputInput.val("Clear Speed: " + outputValue[0].toFixed(3) + "\n  Kill Speed: " + outputValue[1].toFixed(3));
       }
       else {
           this.outputInput.val("Output");

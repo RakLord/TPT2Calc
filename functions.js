@@ -99,7 +99,8 @@ export function difficultyToDropchance(diff) {
 
 export function clearSpeedCalculator(kills, time, region, difficulty, gameSpeedInput, waveCompression) {
     // can accept 0-5 or "EASY" for difficulty (str name)
-
+    
+    console.log(gameSpeedInput);
     let enemiesPath = getDifficultyValue(difficulty, waveCompression); // Do this wherever we take a difficulty, allows to convert from a dropdown menu later to raw value
     let paths = regionToPath((region+1));
     let gameSpeed = gameSpeedToValue(gameSpeedInput);
@@ -109,6 +110,7 @@ export function clearSpeedCalculator(kills, time, region, difficulty, gameSpeedI
     let clearSpeed = (kills * gameSpeed) / (time / enemiesWave);
     let killsPerSec = (kills * gameSpeed) / time;
     
+    console.log(enemiesPath, paths, gameSpeed, enemiesWave, clearSpeed, killsPerSec);
     return ([clearSpeed, killsPerSec]);
 }
 
