@@ -87,13 +87,12 @@ function difficultyToDropchance(diff) {
     }
 }
 
-function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed, moreAccuracy) {
+function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed) {
     // can accept 0-5 or "EASY" for difficulty (str name)
 
     let difficulty = getDifficultyValue(difficulty);
     let paths = regionToPath(region);
     let elements = 1;
-    let difficulty;
     let enemiesWave;
 
     if (difficulty = 5) {
@@ -102,7 +101,10 @@ function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed, moreAc
         elements = regionToElements(region);
     }
 
-
+    let clearSpeed = (kills * elements * gameSpeed) / (time / enemiesWave);
+    let killsPerSec = (kills * elements * gameSpeed) / time;
+    
+    return (clearSpeed, killsPerSec);
 }
 
 function getDifficultyValue(difficulty) {
