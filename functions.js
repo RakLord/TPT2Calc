@@ -90,11 +90,12 @@ function difficultyToDropchance(diff) {
 function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed, moreAccuracy) {
     // can accept 0-5 or "EASY" for difficulty (str name)
 
-    let difficulty = getDifficultyValue(difficulty);
+    let difficulty = getDifficultyValue(difficulty); // Do this wherever we take a difficulty, allows to convert from a dropdown menu later to raw value
+
     let paths = regionToPath(region);
     let elements = 1;
-    let difficulty;
-    let enemiesWave;
+    let enemiesWave = enemiesPerWave(difficulty, paths, moreAccuracy);
+
 
     if (difficulty = 5) {
         elements = 10;
@@ -102,7 +103,10 @@ function clearSpeedCalculator(kills, time, region, difficulty, gameSpeed, moreAc
         elements = regionToElements(region);
     }
 
-
+    let clearSpeed = (kills * elements * gameSpeed) / (time / enemiesWave);
+    let killsPerSec = (kills * elements * gameSpeed) / time;
+    
+    return (clearSpeed, killsPerSec);
 }
 
 function getDifficultyValue(difficulty) {
