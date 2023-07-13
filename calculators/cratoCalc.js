@@ -36,14 +36,13 @@ export class CratoCalculator {
   
       this.inputs = {};
       
-      this.inputs.value1 = newInput("Input 1");
-      this.inputs.value2 = newInput("Input 2");
-      this.inputs.value3 = newInput("Input 3");
-  
-      this.inputsGrid.append(this.inputs.value1);      
-      this.inputsGrid.append(this.inputs.value2);      
-      this.inputsGrid.append(this.inputs.value3);      
-  
+      this.inputs.townLevel = newInput("Town Level");
+      this.inputsGrid.append(this.inputs.townLevel);  
+
+      this.inputs.currentExperience = newInput("Current Experience");
+      this.inputsGrid.append(this.inputs.currentExperience);
+
+
       // Output Stuff
       this.output = $("<div>").addClass("flex-container flex-col flex-center");
       this.outputTitle = $("<h2>").addClass("flex-container flex-col flex-center");
@@ -51,12 +50,10 @@ export class CratoCalculator {
       this.outputInput = $("<input>").addClass("output-box");
       this.outputInput.attr("placeholder", "OUTPUT");
       this.output.append(this.outputTitle, this.outputInput);
-  
-  
-  
+    
       // Add all to section
       this.section.append(this.title);
-      this.section.append(this.inputsGrid)
+      this.section.append(this.inputsGrid);
       this.section.append(this.output);
       
       // Add section to main
@@ -75,16 +72,16 @@ export class CratoCalculator {
         });
       }
       
-      setupInputs(this.inputs.value1);
-      setupInputs(this.inputs.value2);
-      setupInputs(this.inputs.value3);
+      setupInputs(this.inputs.townLevel);
+      setupInputs(this.inputs.currentExperience);
     }
     
     calculate() {
-      let outputValue =
-      parseFloat(this.inputs.value1.children().last().val()) +
-      parseFloat(this.inputs.value2.children().last().val()) +
-      parseFloat(this.inputs.value3.children().last().val());
+
+      let v1 = parseFloat(this.inputs.townLevel.children().last().val());
+      let v2 = parseFloat(this.inputs.currentExperience.children().last().val());
+
+      let outputValue = v1 + v2;
       
       console.log(outputValue);
       if (outputValue) {
