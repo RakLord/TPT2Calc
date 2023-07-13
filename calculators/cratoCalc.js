@@ -47,10 +47,10 @@ export class CratoCalculator {
       this.inputsGrid.append(this.inputs.kills);  
 
 
-      this.inputs.CSPRegion = newInput("Current Region", ["FOREST","DESERT","WINTER","UNDERGROUND",
+      this.inputs.region = newInput("Current Region", ["FOREST","DESERT","WINTER","UNDERGROUND",
       "VOLCANO","HIGH MOUNTAIN","JUNGLE","METALLIC RUINS","BEACH","OCEAN","NEUTRAL",
       "DARK REALM","HEAVEN","UNIVERSE","CHAOS"]);
-      this.inputsGrid.append(this.inputs.CSPRegion);
+      this.inputsGrid.append(this.inputs.region);
 
       this.inputs.difficulty = newInput("Current Difficulty", 
       ["EASY","MEDIUM","HARD","INSANE","NIGHTMARE","IMPOSSIBLE"]);
@@ -80,9 +80,7 @@ export class CratoCalculator {
       const self = this;
   
       function setupInputs(value) {
-        console.log(value.children().last());
         let inputBox = value.children().last().hasClass("input-box")
-
         if (inputBox) {
           value.on("input", function() {
             // This needs to reference the last child o fthe value1 selector as that is the input field
@@ -97,7 +95,6 @@ export class CratoCalculator {
             self.calculate();
         });
         }
-
       }
       
       setupInputs(this.inputs.gameTimeH);
@@ -105,7 +102,7 @@ export class CratoCalculator {
       setupInputs(this.inputs.gameTimeS);
       setupInputs(this.inputs.gameSpeed);
       setupInputs(this.inputs.kills);
-      setupInputs(this.inputs.CSPRegion);
+      setupInputs(this.inputs.region);
       setupInputs(this.inputs.difficulty);
       setupInputs(this.inputs.waveCompression);
 
@@ -120,20 +117,22 @@ export class CratoCalculator {
       let secs = parseFloat(this.inputs.gameTimeS.children().last().val());
       let time = hour*3600 + mins*60 + secs;
 
-      let indexRegion = this.inputs.CSPRegion.find("option:selected").val();
+      let indexRegion = this.inputs.region.find("option:selected").val();
       let indexDifficulty = this.inputs.difficulty.find("option:selected").val();
       let indexSpeed = parseFloat(this.inputs.gameSpeed.find("option:selected").val());
       let indexWaveCompression = this.inputs.waveCompression.find("option:selected").val();
 
-
-
-
       let outputValue = this.clearSpeedCalculator(kills, time, indexRegion,
         indexDifficulty, indexSpeed, indexWaveCompression);
       
-      console.log(outputValue);
+      function notNanCheck(n) {
+        return Number(n) === n && n % 1 !== 0;
+      }
+      console.log(outputValue)
       if (outputValue) {
+        if (notNanCheck(outputValue[0]) && notNanCheck(outputValue[0])) {
           this.outputInput.val("Clear Speed: " + outputValue[0].toFixed(3) + "\n  Kill Speed: " + outputValue[1].toFixed(3));
+        }
       }
       else {
           this.outputInput.val("Output");
